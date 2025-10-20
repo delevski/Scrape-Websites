@@ -93,8 +93,10 @@ GOOGLE_SERVICE_ACCOUNT_CREDENTIALS={"type":"service_account",...}
    - Copy the spreadsheet ID from the URL
 
 5. **Configure Credentials**
-   - Place the JSON credentials in `server/credentials.json`
+   - **IMPORTANT**: Never commit credentials to version control
+   - Place the JSON credentials in `server/credentials.json` (not tracked by git)
    - Or set `GOOGLE_SERVICE_ACCOUNT_CREDENTIALS` environment variable
+   - The `credentials.json` file is already in `.gitignore` for security
 
 ## 🚀 Usage
 
@@ -286,6 +288,17 @@ The application includes comprehensive error handling for:
 - **Input Validation** - Joi schema validation
 - **Helmet Security** - Security headers
 - **Environment Variables** - Sensitive data protection
+- **Credential Protection** - Google service account credentials excluded from version control
+- **GitHub Secret Scanning** - Automatic detection of exposed secrets
+
+### Security Best Practices
+
+- ✅ Never commit credentials to version control
+- ✅ Use environment variables for sensitive configuration
+- ✅ Regularly rotate API keys and tokens
+- ✅ Use HTTPS in production environments
+- ✅ Implement proper access controls
+- ✅ Monitor for security vulnerabilities
 
 ## 📊 Data Export Format
 
