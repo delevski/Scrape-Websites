@@ -1,20 +1,55 @@
 {
   "name": "web-scraper-app",
   "version": "1.0.0",
-  "description": "Production-grade web scraping application with React frontend and Node.js backend",
+  "description": "Production-grade web scraping application with React frontend and Node.js backend, featuring Google Sheets integration for data export",
   "main": "server/index.js",
+  "homepage": "https://github.com/yourusername/web-scraper",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/web-scraper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/web-scraper/issues"
+  },
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && npm run dev",
     "client": "cd client && npm run dev",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
     "build": "cd client && npm run build",
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "lint": "cd server && npm run lint && cd ../client && npm run lint",
+    "test": "cd server && npm test && cd ../client && npm test",
+    "clean": "rm -rf node_modules server/node_modules client/node_modules client/dist",
+    "setup": "npm run install-all && cp server/env.example server/.env && cp client/env.example client/.env"
   },
-  "keywords": ["web-scraping", "react", "nodejs", "express", "cheerio"],
-  "author": "Senior Full-Stack Developer",
+  "keywords": [
+    "web-scraping",
+    "react",
+    "nodejs",
+    "express",
+    "cheerio",
+    "google-sheets",
+    "data-extraction",
+    "automation",
+    "scraping-tool",
+    "data-export"
+  ],
+  "author": {
+    "name": "Senior Full-Stack Developer",
+    "email": "developer@example.com",
+    "url": "https://github.com/yourusername"
+  },
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  }
+  },
+  "workspaces": [
+    "server",
+    "client"
+  ]
 }

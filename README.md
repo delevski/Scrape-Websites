@@ -1,277 +1,161 @@
-# Web Scraper Application
+# Web Scraper with Google Sheets Export
 
-A **production-grade web scraping application** built with modern technologies and best practices. This application allows users to input a website URL, performs comprehensive web scraping, and displays results in both raw text and structured table formats.
+A production-grade web scraping application that extracts data from websites and exports the organized results to Google Sheets. Built with Node.js, Express, React, and integrated with Google Sheets API.
 
 ## 🚀 Features
 
-### Core Functionality
-- **URL Input & Validation**: Secure URL input with real-time validation
-- **Web Scraping**: Robust scraping using Cheerio with comprehensive error handling
-- **Dual Display**: Raw text extraction and structured HTML element parsing
-- **Search & Filter**: Advanced filtering capabilities for structured data
-- **Export Options**: Download results as TXT, JSON, or CSV formats
-- **Responsive Design**: Modern, mobile-friendly UI with dark mode support
+- **Web Scraping**: Extract text content, links, and structured data from any website
+- **Google Sheets Integration**: Automatically export scraped data to Google Sheets
+- **Real-time Processing**: Fast scraping with loading states and progress indicators
+- **Data Organization**: Structured data display with search and filter capabilities
+- **Modern UI**: Clean, responsive interface built with React and TailwindCSS
+- **Error Handling**: Robust error handling with user-friendly messages
+- **Security**: Rate limiting, CORS protection, and input validation
 
-### Technical Features
-- **Production-Ready Architecture**: Clean separation of concerns with modular design
-- **Error Handling**: Comprehensive error handling with user-friendly messages
-- **Rate Limiting**: Built-in rate limiting to prevent abuse
-- **Security**: Helmet.js security headers and input validation
-- **Performance**: Optimized for speed with proper loading states
-- **Accessibility**: WCAG-compliant design with proper ARIA labels
+## 📋 Table of Contents
 
-## 🏗️ Architecture
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Google Sheets Setup](#google-sheets-setup)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-### Backend (Node.js + Express)
-```
-server/
-├── controllers/          # Business logic controllers
-│   └── scrapeController.js
-├── routes/              # API route definitions
-│   └── scrape.js
-├── services/            # Core scraping service
-│   └── scraperService.js
-├── utils/               # Utility functions
-│   ├── errorHandler.js
-│   ├── logger.js
-│   └── validation.js
-├── index.js            # Main server file
-└── package.json
-```
+## 🛠 Installation
 
-### Frontend (React + Vite)
-```
-client/
-├── src/
-│   ├── components/      # React components
-│   │   ├── ScrapeForm.jsx
-│   │   ├── ResultsDisplay.jsx
-│   │   ├── LoadingSpinner.jsx
-│   │   └── ErrorMessage.jsx
-│   ├── services/        # API service layer
-│   │   └── api.js
-│   ├── utils/           # Utility functions
-│   │   └── cn.js
-│   ├── App.jsx          # Main application component
-│   ├── main.jsx         # Application entry point
-│   └── index.css        # Global styles
-├── index.html
-└── package.json
-```
+### Prerequisites
 
-## 🛠️ Technology Stack
+- Node.js (v18 or higher)
+- npm or yarn
+- Google Cloud Project (for Google Sheets integration)
 
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **Cheerio** - HTML parsing and manipulation
-- **Axios** - HTTP client for web requests
-- **Joi** - Input validation
-- **Helmet** - Security middleware
-- **Morgan** - HTTP request logger
-- **CORS** - Cross-origin resource sharing
-
-### Frontend
-- **React 18** - UI library with hooks
-- **Vite** - Build tool and development server
-- **TailwindCSS** - Utility-first CSS framework
-- **Lucide React** - Icon library
-- **Axios** - HTTP client
-
-### Development Tools
-- **Concurrently** - Run multiple npm scripts
-- **Nodemon** - Auto-restart server during development
-- **ESLint** - Code linting
-- **PostCSS** - CSS processing
-
-## 📋 Prerequisites
-
-Before running this application, ensure you have the following installed:
-
-- **Node.js** (v16.0.0 or higher)
-- **npm** (v8.0.0 or higher)
-
-## 🚀 Quick Start
-
-### 1. Clone and Install Dependencies
+### Clone the Repository
 
 ```bash
-# Navigate to the project directory
-cd Scrape-Websites
-
-# Install all dependencies (root, server, and client)
-npm run install-all
+git clone https://github.com/yourusername/web-scraper.git
+cd web-scraper
 ```
 
-### 2. Environment Setup
+### Install Dependencies
 
 ```bash
-# Copy environment variables template
-cp server/env.example server/.env
+# Install root dependencies
+npm install
 
-# Edit the .env file with your preferred settings (optional)
-# The application will work with default values
+# Install server dependencies
+cd server
+npm install
+
+# Install client dependencies
+cd ../client
+npm install
 ```
 
-### 3. Start Development Servers
-
-```bash
-# Start both frontend and backend servers
-npm run dev
-```
-
-This command will start:
-- **Backend server** on `http://localhost:5000`
-- **Frontend application** on `http://localhost:3000`
-
-### 4. Access the Application
-
-Open your browser and navigate to `http://localhost:3000`
-
-## 🎯 Usage
-
-### Basic Scraping
-1. **Enter URL**: Input any valid website URL (must start with `http://` or `https://`)
-2. **Click Scrape**: Click the "Scrape Website" button to start the process
-3. **View Results**: Browse the results in two formats:
-   - **Raw Text**: Complete extracted text content
-   - **Structured Data**: Organized table with HTML elements
-
-### Advanced Features
-- **Search & Filter**: Use the search bar in structured data view to filter elements
-- **Export Data**: Download results as TXT, JSON, or CSV files
-- **Copy to Clipboard**: Copy raw text or structured data to clipboard
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-
-### Example URLs to Try
-- `https://example.com` - Simple test page
-- `https://news.ycombinator.com` - News aggregator with structured content
-- `https://github.com` - Complex website with rich content
-- `https://httpbin.org/html` - HTML testing endpoint
-
-## 🔧 Configuration
+## ⚙️ Configuration
 
 ### Environment Variables
 
-Create a `server/.env` file with the following options:
+Create a `.env` file in the `server` directory:
 
-```env
-# Server Configuration
+```bash
 PORT=5000
 NODE_ENV=development
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
+SCRAPING_TIMEOUT_MS=30000
+MAX_CONTENT_LENGTH=10485760
 
-# Rate Limiting
-RATE_LIMIT_WINDOW_MS=900000    # 15 minutes
-RATE_LIMIT_MAX_REQUESTS=100    # Max requests per window
-
-# Scraping Configuration
-SCRAPING_TIMEOUT_MS=30000      # 30 seconds timeout
-MAX_CONTENT_LENGTH=10485760    # 10MB max content
+# Google Sheets Configuration
+GOOGLE_SPREADSHEET_ID=your-spreadsheet-id-here
+GOOGLE_SERVICE_ACCOUNT_CREDENTIALS={"type":"service_account",...}
 ```
 
-### Frontend Configuration
+### Google Sheets Setup
 
-Create a `client/.env` file for frontend environment variables:
+1. **Create a Google Cloud Project**
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select existing one
 
-```env
-# API Configuration
-VITE_API_URL=http://localhost:5000/api
-```
+2. **Enable Google Sheets API**
+   - Navigate to "APIs & Services" → "Library"
+   - Search for "Google Sheets API" and enable it
 
-## 🏃‍♂️ Available Scripts
+3. **Create Service Account**
+   - Go to "IAM & Admin" → "Service Accounts"
+   - Create a new service account
+   - Download the JSON credentials file
 
-### Root Level Scripts
+4. **Share Google Sheet**
+   - Open your Google Sheet
+   - Click "Share" and add the service account email as Editor
+   - Copy the spreadsheet ID from the URL
+
+5. **Configure Credentials**
+   - Place the JSON credentials in `server/credentials.json`
+   - Or set `GOOGLE_SERVICE_ACCOUNT_CREDENTIALS` environment variable
+
+## 🚀 Usage
+
+### Development Mode
+
 ```bash
-npm run dev          # Start both frontend and backend
-npm run install-all  # Install all dependencies
-npm run build        # Build frontend for production
-npm start           # Start production server
+# Start both client and server
+npm run dev
+
+# Or start individually
+npm run server  # Backend only
+npm run client  # Frontend only
 ```
 
-### Backend Scripts
-```bash
-cd server
-npm run dev         # Start with nodemon (development)
-npm start          # Start production server
-```
+### Production Mode
 
-### Frontend Scripts
 ```bash
+# Build the client
 cd client
-npm run dev        # Start Vite development server
-npm run build      # Build for production
-npm run preview    # Preview production build
-npm run lint       # Run ESLint
-```
-
-## 🏗️ Production Deployment
-
-### Build for Production
-
-```bash
-# Build the frontend
 npm run build
 
-# The built files will be in client/dist/
+# Start the server
+cd ../server
+npm start
 ```
 
-### Environment Setup
+### Using the Application
 
-1. Set `NODE_ENV=production` in your environment
-2. Configure production database if needed
-3. Set up proper CORS origins for your domain
-4. Configure rate limiting for production traffic
-5. Set up logging and monitoring
+1. **Open the Application**
+   - Navigate to `http://localhost:3000` (or the port shown in terminal)
 
-### Docker Deployment (Optional)
+2. **Scrape a Website**
+   - Enter a URL in the input field
+   - Click "Scrape" to extract data
+   - View results in raw text or structured table format
 
-```dockerfile
-# Example Dockerfile for production
-FROM node:18-alpine
+3. **Export to Google Sheets**
+   - Click "Export to Google Sheets" button
+   - Data will be automatically organized and exported
+   - Each export creates a new sheet tab with timestamp
 
-WORKDIR /app
+## 📚 API Documentation
 
-# Copy package files
-COPY package*.json ./
-COPY server/package*.json ./server/
-COPY client/package*.json ./client/
+### Endpoints
 
-# Install dependencies
-RUN npm run install-all
+#### POST `/api/scrape`
+Scrape a website and extract structured data.
 
-# Build frontend
-RUN cd client && npm run build
-
-# Expose port
-EXPOSE 5000
-
-# Start application
-CMD ["npm", "start"]
-```
-
-## 🧪 API Documentation
-
-### Scrape Endpoint
-
-**POST** `/api/scrape`
-
-Scrapes a website and returns both raw text and structured data.
-
-#### Request Body
+**Request:**
 ```json
 {
   "url": "https://example.com"
 }
 ```
 
-#### Response
+**Response:**
 ```json
 {
   "success": true,
   "data": {
     "url": "https://example.com",
-    "timestamp": "2024-01-01T00:00:00.000Z",
-    "processingTime": 1234,
     "rawText": "Extracted text content...",
     "structuredData": [
       {
@@ -279,113 +163,173 @@ Scrapes a website and returns both raw text and structured data.
         "text": "Page Title",
         "href": null,
         "class": "main-title",
-        "id": "page-title"
+        "id": "title",
+        "index": 0
       }
     ],
     "metadata": {
       "totalElements": 150,
-      "textLength": 5432,
-      "uniqueTags": 12
+      "textLength": 5000,
+      "uniqueTags": 25,
+      "processingTime": 1200
     }
   }
 }
 ```
 
-### Health Check
+#### POST `/api/export/google-sheets`
+Export scraped data to Google Sheets.
 
-**GET** `/health`
-
-Returns server health status.
-
-#### Response
+**Request:**
 ```json
 {
-  "status": "OK",
-  "timestamp": "2024-01-01T00:00:00.000Z",
-  "uptime": 3600
+  "url": "https://example.com",
+  "structuredData": [...],
+  "rawText": "...",
+  "metadata": {...}
 }
 ```
 
-## 🛡️ Security Features
-
-- **Input Validation**: Comprehensive URL and input validation using Joi
-- **Rate Limiting**: Configurable rate limiting to prevent abuse
-- **Security Headers**: Helmet.js for security headers
-- **CORS Protection**: Proper CORS configuration
-- **Error Handling**: Secure error messages without sensitive information
-- **Content Length Limits**: Protection against large content attacks
-
-## 🎨 UI/UX Features
-
-- **Modern Design**: Clean, professional interface with TailwindCSS
-- **Dark Mode Support**: Automatic dark mode detection and manual toggle
-- **Responsive Layout**: Mobile-first responsive design
-- **Loading States**: Proper loading indicators and skeleton screens
-- **Error Handling**: User-friendly error messages with recovery options
-- **Accessibility**: WCAG-compliant design with proper ARIA labels
-- **Keyboard Navigation**: Full keyboard accessibility support
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **Port Already in Use**
-   ```bash
-   # Kill process on port 5000
-   lsof -ti:5000 | xargs kill -9
-   
-   # Or change port in server/.env
-   PORT=5001
-   ```
-
-2. **CORS Errors**
-   ```bash
-   # Ensure frontend is running on port 3000
-   # Or update CORS configuration in server/index.js
-   ```
-
-3. **Scraping Timeouts**
-   ```bash
-   # Increase timeout in server/.env
-   SCRAPING_TIMEOUT_MS=60000
-   ```
-
-4. **Large Content Issues**
-   ```bash
-   # Increase content length limit
-   MAX_CONTENT_LENGTH=20971520  # 20MB
-   ```
-
-### Debug Mode
-
-Enable debug logging by setting:
-```env
-NODE_ENV=development
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Data exported to Google Sheets successfully",
+  "data": {
+    "sheetUrl": "https://docs.google.com/spreadsheets/d/...",
+    "sheetName": "Scrape_2025-10-20T10-44-41-134Z",
+    "exportedRows": 150,
+    "exportTime": 8388
+  }
+}
 ```
+
+#### GET `/api/export/status`
+Check the status of export services.
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "googleSheets": {
+      "available": true,
+      "configured": true
+    },
+    "timestamp": "2025-10-20T10:44:41.134Z"
+  }
+}
+```
+
+## 🏗 Project Structure
+
+```
+web-scraper/
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── services/       # API services
+│   │   ├── utils/          # Utility functions
+│   │   └── App.jsx         # Main app component
+│   ├── public/
+│   └── package.json
+├── server/                 # Node.js backend
+│   ├── routes/             # API routes
+│   ├── controllers/        # Route controllers
+│   ├── services/           # Business logic
+│   ├── utils/              # Utility functions
+│   ├── credentials.json    # Google service account
+│   └── package.json
+├── README.md
+├── .gitignore
+└── package.json           # Root package.json
+```
+
+## 🔧 Technologies Used
+
+### Backend
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **Cheerio** - HTML parsing and manipulation
+- **Axios** - HTTP client for web requests
+- **Google APIs** - Google Sheets integration
+- **Joi** - Request validation
+- **Morgan** - HTTP request logging
+- **Helmet** - Security middleware
+- **CORS** - Cross-origin resource sharing
+
+### Frontend
+- **React** - UI library
+- **Vite** - Build tool and dev server
+- **TailwindCSS** - CSS framework
+- **Lucide React** - Icon library
+
+### Development Tools
+- **Nodemon** - Auto-restart server
+- **Concurrently** - Run multiple commands
+- **ESLint** - Code linting
+
+## 🚨 Error Handling
+
+The application includes comprehensive error handling for:
+
+- **Invalid URLs** - Validates URL format before scraping
+- **Network Errors** - Handles timeouts and connection issues
+- **Rate Limiting** - Prevents abuse with request limits
+- **Google Sheets Errors** - Graceful handling of API failures
+- **Validation Errors** - Input validation with detailed error messages
+
+## 🔒 Security Features
+
+- **Rate Limiting** - Configurable request limits
+- **CORS Protection** - Cross-origin request security
+- **Input Validation** - Joi schema validation
+- **Helmet Security** - Security headers
+- **Environment Variables** - Sensitive data protection
+
+## 📊 Data Export Format
+
+### Google Sheets Structure
+
+Each export creates:
+1. **Main Data Sheet** - Structured scraped data
+2. **Metadata Sheet** - Scraping information and statistics
+
+### Data Columns
+- **Tag** - HTML tag name
+- **Text** - Extracted text content
+- **Href** - Link URL (if applicable)
+- **Class** - CSS class name
+- **ID** - Element ID
+- **Index** - Element position
 
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🆘 Support
+
+If you encounter any issues:
+
+1. Check the [Issues](https://github.com/yourusername/web-scraper/issues) page
+2. Create a new issue with detailed description
+3. Include error logs and steps to reproduce
+
 ## 🙏 Acknowledgments
 
-- **Cheerio** - For powerful HTML parsing capabilities
-- **TailwindCSS** - For the excellent utility-first CSS framework
-- **React** - For the robust component-based UI library
-- **Express.js** - For the minimal and flexible web framework
-
-## 📞 Support
-
-For support, please open an issue in the GitHub repository or contact the development team.
+- Google Sheets API for seamless data export
+- Cheerio for efficient HTML parsing
+- React and TailwindCSS for the modern UI
+- The open-source community for amazing tools and libraries
 
 ---
 
-**Built with ❤️ by Senior Full-Stack Developer**
+**Happy Scraping! 🕷️📊**
